@@ -1,0 +1,5 @@
+{
+  "python.testing.pytestArgs": ["Linux"],
+  "python.testing.unittestEnabled": false,
+  "python.testing.pytestEnabled": true
+}
