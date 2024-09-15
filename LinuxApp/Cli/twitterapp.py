@@ -60,6 +60,3 @@ class TwitterApp():
         await bot.searchProfile(username,limit=Limit)
 
         return "Profile Searched Successfully"
-    
-    
-        

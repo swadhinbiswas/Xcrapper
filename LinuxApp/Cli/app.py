@@ -53,6 +53,14 @@ class App:
            
             link=handel_link()
             data= await self.tw.grabmediafromuser(link)
+            if data:
+                TextStyle().print_info("Do you want to Save to Database or Local Storage(json)? yes/no")
+                
+                
+                
+            else:
+                TextStyle().print_error("No Media Found")
+                self.start_app()
             
                 
             

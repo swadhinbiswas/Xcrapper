@@ -7,7 +7,7 @@ class ScrapperFrame:
     self.data=data
     self.user=user
   
-  def extracturl(self,url:str)->str:
+  def extractids(self,url:str)->str:
     match = re.search(r'media\/(.*?)\?', url)
     if match:
       return match.group(1)
@@ -19,7 +19,7 @@ class ScrapperFrame:
    
     list1=[]
     for i in data:
-      id=self.extracturl(i)
+      id=self.extractids(i)
       list1.append(id)
     print(list1.__len__())
  
