@@ -3,6 +3,8 @@ from Database.path import Settings
 from Cli.twitterapp import TwitterApp as Twitter
 from Database.userinfo import User
 from Functions.handelloop import handel_link
+from Functions.Downloader import Downloader
+import re
 
 
 
@@ -26,7 +28,8 @@ class App:
         TextStyle().print_option("3","Search Tweets")
         TextStyle().print_option("4","Search Profile")
         TextStyle().print_option("5","Grab Media from User")
-        TextStyle().print_option("6","Exit")
+        TextStyle().print_option("6","Download ALL Media from User Profile")
+        TextStyle().print_option("7","Exit")
         choice=input()
         if choice=="1":
             if self.user.check_user()==False:
@@ -55,6 +58,14 @@ class App:
             data= await self.tw.grabmediafromuser(link)
             if data:
                 TextStyle().print_info("Do you want to Save to Database or Local Storage(json)? yes/no")
+                if input().lower()=="yes":
+                    self.user.save_to_db(data)
+                    TextStyle().print_success("Data Saved to Database")
+                    self.start_app()
+                else:
+                    self.user.save_to_json(data)
+                    TextStyle().print_success("Data Saved to Local Storage")
+                    self.start_app()
                 
                 
                 
@@ -62,6 +73,15 @@ class App:
                 TextStyle().print_error("No Media Found")
                 self.start_app()
             
+        elif choice=="6":
+            TextStyle().print_info("Do you want to Download ALL Media from User Profile? yes/no")
+            if input().lower()=="yes":
+                link=handel_link()
+                username = re.search(r"^https?://[^/]+/([^/?]+)", link).group(1)
+                dicdata= await self.tw.grabmediafromuser(link)
+                urls=dicdata[f"{username}"]
+                for url in urls:
+                    Downloader(url)
                 
             
             
